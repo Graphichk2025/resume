@@ -18,50 +18,166 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
-st.markdown("""
-<style>
-    .main-header {
-        font-size: 3rem;
-        color: #1E40AF;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    .analysis-card {
-        background-color: #F3F4F6;
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .metric-card {
-        background-color: #FFFFFF;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        text-align: center;
-    }
-    .recommendation-card {
-        background-color: #EFF6FF;
-        border-left: 4px solid #3B82F6;
-        border-radius: 5px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    .stButton button {
-        background-color: #3B82F6;
-        color: white;
-        font-weight: bold;
-    }
-    .resume-section {
-        background-color: #F9FAFB;
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Initialize session state for theme
+if 'theme' not in st.session_state:
+    st.session_state.theme = 'light'
+
+# Function to toggle theme
+def toggle_theme():
+    if st.session_state.theme == 'light':
+        st.session_state.theme = 'dark'
+    else:
+        st.session_state.theme = 'light'
+
+# Custom CSS based on theme
+def apply_theme():
+    if st.session_state.theme == 'dark':
+        st.markdown("""
+        <style>
+            .main {
+                background-color: #0E1117;
+                color: #FAFAFA;
+            }
+            .stApp {
+                background-color: #0E1117;
+            }
+            .main-header {
+                font-size: 3rem;
+                color: #3B82F6;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .analysis-card {
+                background-color: #262730;
+                border-radius: 10px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                color: #FAFAFA;
+            }
+            .metric-card {
+                background-color: #1E2130;
+                border-radius: 10px;
+                padding: 1rem;
+                margin: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                color: #FAFAFA;
+            }
+            .recommendation-card {
+                background-color: #1E2A3A;
+                border-left: 4px solid #3B82F6;
+                border-radius: 5px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                color: #FAFAFA;
+            }
+            .stButton button {
+                background-color: #3B82F6;
+                color: white;
+                font-weight: bold;
+            }
+            .resume-section {
+                background-color: #1A1D29;
+                border-radius: 10px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                color: #FAFAFA;
+            }
+            .best-job-card {
+                background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+                border-radius: 10px;
+                padding: 2rem;
+                margin-bottom: 2rem;
+                text-align: center;
+                color: white;
+            }
+            .job-match-card {
+                background-color: #1E2130;
+                border-radius: 10px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                color: #FAFAFA;
+            }
+            h1, h2, h3, h4, h5, h6, p, div, span {
+                color: #FAFAFA !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <style>
+            .main {
+                background-color: #FFFFFF;
+                color: #31333F;
+            }
+            .stApp {
+                background-color: #FFFFFF;
+            }
+            .main-header {
+                font-size: 3rem;
+                color: #1E40AF;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .analysis-card {
+                background-color: #F3F4F6;
+                border-radius: 10px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                color: #31333F;
+            }
+            .metric-card {
+                background-color: #FFFFFF;
+                border-radius: 10px;
+                padding: 1rem;
+                margin: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                text-align: center;
+                color: #31333F;
+            }
+            .recommendation-card {
+                background-color: #EFF6FF;
+                border-left: 4px solid #3B82F6;
+                border-radius: 5px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                color: #31333F;
+            }
+            .stButton button {
+                background-color: #3B82F6;
+                color: white;
+                font-weight: bold;
+            }
+            .resume-section {
+                background-color: #F9FAFB;
+                border-radius: 10px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                color: #31333F;
+            }
+            .best-job-card {
+                background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+                border-radius: 10px;
+                padding: 2rem;
+                margin-bottom: 2rem;
+                text-align: center;
+                color: white;
+            }
+            .job-match-card {
+                background-color: #FFFFFF;
+                border-radius: 10px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                color: #31333F;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h1, h2, h3, h4, h5, h6, p, div, span {
+                color: #31333F !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
 
 # Initialize Gemini API (you'll need to replace with your actual API key)
 def setup_gemini():
@@ -111,12 +227,15 @@ def analyze_resume_with_gemini(resume_text):
     
     # Simulate career matches
     career_matches = [
-        {"role": "Data Scientist", "match": 85},
-        {"role": "Machine Learning Engineer", "match": 78},
-        {"role": "Software Developer", "match": 72},
-        {"role": "Data Analyst", "match": 68},
-        {"role": "DevOps Engineer", "match": 55}
+        {"role": "Data Scientist", "match": 85, "reason": "Strong background in machine learning and data analysis"},
+        {"role": "Machine Learning Engineer", "match": 78, "reason": "Good programming skills and ML experience"},
+        {"role": "Software Developer", "match": 72, "reason": "Solid programming foundation but limited software engineering experience"},
+        {"role": "Data Analyst", "match": 68, "reason": "Good analytical skills but could benefit from more visualization experience"},
+        {"role": "DevOps Engineer", "match": 55, "reason": "Some cloud experience but limited DevOps tools knowledge"}
     ]
+    
+    # Find best job match
+    best_job = max(career_matches, key=lambda x: x['match'])
     
     # Simulate skill analysis
     skill_categories = {
@@ -135,6 +254,7 @@ def analyze_resume_with_gemini(resume_text):
         "education_level": education_level,
         "recommendations": recommendations,
         "career_matches": career_matches,
+        "best_job": best_job,
         "skill_categories": skill_categories,
         "resume_score": resume_score
     }
@@ -143,13 +263,23 @@ def analyze_resume_with_gemini(resume_text):
 def display_analysis_results(analysis):
     st.markdown('<h2 class="main-header">Resume Analysis Results</h2>', unsafe_allow_html=True)
     
+    # Best job match
+    st.markdown(f"""
+    <div class="best-job-card">
+        <h2>🎯 Best Career Match</h2>
+        <h1>{analysis['best_job']['role']}</h1>
+        <h3>{analysis['best_job']['match']}% Match</h3>
+        <p>{analysis['best_job']['reason']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Overall score
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"""
         <div class="metric-card">
             <h3>Resume Score</h3>
-            <h2 style="color: #1E40AF;">{analysis['resume_score']}/100</h2>
+            <h2 style="color: #3B82F6;">{analysis['resume_score']}/100</h2>
         </div>
         """, unsafe_allow_html=True)
     
@@ -157,7 +287,7 @@ def display_analysis_results(analysis):
         st.markdown(f"""
         <div class="metric-card">
             <h3>Years of Experience</h3>
-            <h2 style="color: #1E40AF;">{analysis['experience']}</h2>
+            <h2 style="color: #3B82F6;">{analysis['experience']}</h2>
         </div>
         """, unsafe_allow_html=True)
     
@@ -165,17 +295,30 @@ def display_analysis_results(analysis):
         st.markdown(f"""
         <div class="metric-card">
             <h3>Education Level</h3>
-            <h2 style="color: #1E40AF;">{analysis['education_level']}</h2>
+            <h2 style="color: #3B82F6;">{analysis['education_level']}</h2>
         </div>
         """, unsafe_allow_html=True)
     
     # Career matches chart
-    st.subheader("Recommended Career Paths")
+    st.subheader("Career Path Matches")
     career_df = pd.DataFrame(analysis['career_matches'])
     fig = px.bar(career_df, x='role', y='match', title='Career Match Percentage',
-                 labels={'role': 'Career Role', 'match': 'Match %'})
-    fig.update_traces(marker_color='#3B82F6')
+                 labels={'role': 'Career Role', 'match': 'Match %'},
+                 color='match', color_continuous_scale='Blues')
+    fig.update_layout(plot_bgcolor='rgba(0,0,0,0)' if st.session_state.theme == 'light' else '#0E1117',
+                     paper_bgcolor='rgba(0,0,0,0)' if st.session_state.theme == 'light' else '#0E1117',
+                     font=dict(color='#31333F' if st.session_state.theme == 'light' else '#FAFAFA'))
     st.plotly_chart(fig, use_container_width=True)
+    
+    # Detailed job matches
+    st.subheader("Detailed Job Matches")
+    for job in analysis['career_matches']:
+        st.markdown(f"""
+        <div class="job-match-card">
+            <h4>{job['role']} - {job['match']}% Match</h4>
+            <p>{job['reason']}</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Skills radar chart
     st.subheader("Skill Categories Assessment")
@@ -197,7 +340,10 @@ def display_analysis_results(analysis):
                 visible=True,
                 range=[0, 100]
             )),
-        showlegend=False
+        showlegend=False,
+        plot_bgcolor='rgba(0,0,0,0)' if st.session_state.theme == 'light' else '#0E1117',
+        paper_bgcolor='rgba(0,0,0,0)' if st.session_state.theme == 'light' else '#0E1117',
+        font=dict(color='#31333F' if st.session_state.theme == 'light' else '#FAFAFA')
     )
     st.plotly_chart(fig, use_container_width=True)
     
@@ -237,6 +383,15 @@ def display_analysis_results(analysis):
 
 # Main application
 def main():
+    # Apply theme
+    apply_theme()
+    
+    # Theme toggle button
+    theme_emoji = "🌙" if st.session_state.theme == 'light' else "☀️"
+    if st.button(f"{theme_emoji} Toggle Theme"):
+        toggle_theme()
+        st.rerun()
+    
     st.markdown('<h1 class="main-header">AI Resume Analyzer</h1>', unsafe_allow_html=True)
     st.markdown("### Upload your resume for AI-powered analysis and career recommendations")
     
@@ -282,12 +437,13 @@ def main():
                     "Tailor your skills section to include more industry-specific keywords"
                 ],
                 "career_matches": [
-                    {"role": "Data Scientist", "match": 92},
-                    {"role": "Machine Learning Engineer", "match": 88},
-                    {"role": "Data Engineer", "match": 85},
-                    {"role": "Software Developer", "match": 78},
-                    {"role": "Data Analyst", "match": 75}
+                    {"role": "Data Scientist", "match": 92, "reason": "Excellent combination of machine learning skills and data analysis experience"},
+                    {"role": "Machine Learning Engineer", "match": 88, "reason": "Strong programming skills and experience with ML frameworks"},
+                    {"role": "Data Engineer", "match": 85, "reason": "Good data handling skills and cloud experience"},
+                    {"role": "Software Developer", "match": 78, "reason": "Solid programming foundation but limited large-scale system experience"},
+                    {"role": "Data Analyst", "match": 75, "reason": "Good analytical skills but could benefit from more business domain knowledge"}
                 ],
+                "best_job": {"role": "Data Scientist", "match": 92, "reason": "Excellent combination of machine learning skills and data analysis experience"},
                 "skill_categories": {
                     "Technical Skills": 90,
                     "Data Analysis": 85,
